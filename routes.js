@@ -22,7 +22,8 @@ const ifLoggedin = (req,res,next) => {
     next();
 }
 
-router.get('/', ifNotLoggedin, homePage);
+//router.get('/',ifNotLoggedin, homePage);
+router.get('/', homePage);
 
 router.get("/login", ifLoggedin, loginPage);
 router.post("/login",

@@ -3,12 +3,25 @@ const bcrypt = require('bcryptjs');
 const dbConnection = require("../utils/dbConnection");
 
 // Home Page
-exports.homePage = async (req, res, next) => {
+ /**exports.homePage = async (req, res, next) => {
     const [row] = await dbConnection.execute("SELECT * FROM `users` WHERE `id`=?", [req.session.userID]);
 
     if (row.length !== 1) {
         return res.redirect('/logout');
     }
+
+    res.render('home', {
+        user: row[0]
+    });
+}**/
+// Home Page
+exports.homePage = async (req, res, next) => {
+    //console.log(req.session);
+    if(!req.session.userID){
+        return res.render('welcome');
+    }
+    
+    const [row] = await dbConnection.execute("SELECT * FROM `users` WHERE `id`=?", [req.session.userID]);
 
     res.render('home', {
         user: row[0]

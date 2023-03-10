@@ -1,0 +1,144 @@
+<%- include('header',{
+    title:'welcome'
+}); -%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="vendors/css/grid.css">
+    <link rel="stylesheet" href="vendors/css/normalize.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="stylesheet" href="resources/css/queries.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,300italic">
+    <title>SocioCollabs</title>
+</head>
+<body>
+
+    <header>
+		
+		<div class="row">
+			<div class="headline-text-box">
+				<h1 style="font-size:55px;"><b>SocioCollabs</b><br><h1 style="font-size: 40px;">Alone we can do so little!<br>Together we can do so much!</h1>
+				<a class="btn btn-full" href="#">Donate Now</a>
+				<a class="btn btn-full" href="#">Volunteer Now</a>
+			</div>
+		</div>
+    </header>
+    
+    <section class="section-plans">
+        <div class="row">
+            <h2>No one has ever become poor by giving</h2>
+        </div>
+        <div class="row">
+            <div class="col span-1-of-3">
+                <div class="plan-box">
+                    <div>
+                        
+                        <p class="plan-price"><b>Donate</b></p>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-ghost">Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col span-1-of-3">
+                <div class="plan-box">
+                    <div>
+                        
+                        <p class="plan-price"><b>Fundraiser</b> </p>
+                        
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-ghost">Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col span-1-of-3">
+                <div class="plan-box">
+                    <div>
+                        
+                        <p class="plan-price"><b>Volunteer</b></p>
+                      
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-ghost">Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="contact-form">
+    <section class="section-form">
+        <div class="row">
+            <h2>We're happy to hear from you</h2>
+        </div>
+        <div class="row">
+            <form class="contact-form" action="#" method="post">
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <input type="text" name="name" id="name" placeholder="Your name" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <input type="email" name="email" id="email" placeholder="Your email" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label for="find-us">How did you find us?</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <select name="find-us" id="find-us">
+                            <option value="friends" selected>Friends</option>
+                            <option value="search">Search engine</option>
+                            <option value="ad">Advertisement</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label for="news">Newsletter?</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <input type="checkbox" name="news" id="news" checked> Yes, Please
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label for="message">Drop us a line</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <textarea id="message" name="message" placeholder="Your message"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col span-1-of-3">
+                        <label>&nbsp;</label>
+                    </div>
+                    <div class="col span-2-of-3">
+                        <input type="submit" value="Send it!">
+                    </div>
+                </div>  
+            </form>
+        </div>
+    
+    </section>
+</div>
+    
+</body>
+    <script src="resources/js/script.js"></script>
+</html>
+
+<%- include('footer'); -%>

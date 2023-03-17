@@ -17,3 +17,9 @@ class RegisterForm(FlaskForm):
 	username    = StringField  (u'Username'  , validators=[DataRequired()])
 	password    = PasswordField(u'Password'  , validators=[DataRequired()])
 	email       = StringField  (u'Email'     , validators=[DataRequired(), Email()])
+
+class FundraiserForm(FlaskForm):
+	name    = StringField  (u'Name'  , validators=[DataRequired()])
+	amount    = StringField(u'Amount'  , validators=[DataRequired()])
+	summary    = StringField  (u'Summary'  , validators=[DataRequired()])
+	created_by    = StringField  (u'CreatedBy'  , validators=[DataRequired()])

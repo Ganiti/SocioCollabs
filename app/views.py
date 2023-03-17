@@ -1,26 +1,24 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
-# Python modules
 import os, logging 
 
+
 # Flask modules
-from flask               import render_template, request, url_for, redirect, send_from_directory,flash
+from flask               import render_template, request, url_for, redirect, send_from_directory,flash, make_response
+
 from flask_login         import login_user, logout_user, current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2              import TemplateNotFound
 
-# App modules
+
 from app        import app, lm, db, bc
 from app.models import Users,Fundraisers
 from app.forms  import LoginForm, RegisterForm, FundraiserForm
 
-# provide login manager with load_user callback
+
 @lm.user_loader
 def load_user(user_id):
-    return Users.query.get(int(user_id))
+    ans=Users.query.get(int(user_id))
+    print(ans)
+    return ans
 
 # Logout user
 @app.route('/logout')
@@ -32,7 +30,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     
-    # declare the Registration Form
+    
     form = RegisterForm(request.form)
 
     msg     = None
@@ -45,7 +43,7 @@ def register():
     # check if both http method is POST and form is valid on submit
     if form.validate_on_submit():
 
-        # assign form data to variables
+        
         username = request.form.get('username', '', type=str)
         password = request.form.get('password', '', type=str) 
         email    = request.form.get('email'   , '', type=str) 
@@ -53,7 +51,7 @@ def register():
         # filter User out of database through username
         user = Users.query.filter_by(user=username).first()
 
-        # filter User out of database through username
+        
         user_by_email = Users.query.filter_by(email=email).first()
 
         if user or user_by_email:
@@ -79,7 +77,6 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     
-    # Declare the login form
     form = LoginForm(request.form)
 
     # Flask message injected into the page, in case of any errors
@@ -88,7 +85,7 @@ def login():
     # check if both http method is POST and form is valid on submit
     if form.validate_on_submit():
 
-        # assign form data to variables
+        
         username = request.form.get('username', '', type=str)
         password = request.form.get('password', '', type=str) 
 
@@ -99,7 +96,11 @@ def login():
             
             if bc.check_password_hash(user.password, password):
                 login_user(user)
-                return redirect(url_for('index'))
+                
+                resp=make_response(redirect(url_for('dashboard')))
+                resp.set_cookie('user_name', username)
+                #return redirect(url_for('index'))
+                return resp
             else:
                 msg = "Wrong password. Please try again."
         else:
@@ -170,6 +171,14 @@ def index(path):
     
     except:
         return render_template('page-500.html'), 500
+    
+@app.route('/dashboard')
+def dashboard():
+        username=request.cookies.get('user_name')
+        data=Users.query.filter_by(user=username).first()
+        #print(type(data))
+        resp=make_response(render_template('dashboard.html',data=data)) 
+        return resp
 
 # Return sitemap
 @app.route('/sitemap.xml')

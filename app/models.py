@@ -44,8 +44,36 @@ class Fundraisers(db.Model):
         self.summary      = summary
         self.created_by = created_by
 
-    # def __repr__(self):
-    #     return str(self.id) + ' - ' + str(self.user)
+    def __repr__(self):
+      return str(self.created_by)+ '-' + str(self.amount)
+
+    def save(self):
+
+        # inject self into db session    
+        db.session.add ( self )
+
+        # commit change and save the object
+        db.session.commit( )
+
+        return self 
+
+class Donations(db.Model):
+
+    __tablename__ = 'Donations'
+
+    id               = db.Column(db.Integer,     primary_key=True)
+    name_dn          = db.Column(db.String(64))
+    fundraiser_name  = db.Column(db.String(64))
+    amount           = db.Column(db.Integer)
+
+
+    def __init__(self, name_dn, fundraiser_name, amount,):
+        self.name_dn          = name_dn
+        self.amount           = amount
+        self.fundraiser_name  = fundraiser_name
+        
+    def __repr__(self):
+      return str(self.name_dn)+ '-' + str(self.amount)
 
     def save(self):
 

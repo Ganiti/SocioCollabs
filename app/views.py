@@ -10,8 +10,8 @@ from jinja2              import TemplateNotFound
 
 
 from app        import app, lm, db, bc
-from app.models import Users,Fundraisers
-from app.forms  import LoginForm, RegisterForm, FundraiserForm
+from app.models import Users,Fundraisers,Donations
+from app.forms  import LoginForm, RegisterForm, FundraiserForm, DonationForm
 
 
 @lm.user_loader
@@ -184,3 +184,40 @@ def dashboard():
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+
+@app.route('/fundraiserlist')
+def fundraiserlist():
+    #Fundraisers = Fundraisers.query.filter_by(style=style).order_by(Sock.name).all()
+    return render_template('fundraiserlist.html', Fundraisers = Fundraisers.query.all())
+
+#method for making new donation
+@app.route('/new_donation', methods = ['GET', 'POST'])
+def new_donation():
+      # declare the Registration Form
+    form = DonationForm(request.form)
+
+    msg     = None
+    success = False
+
+    if request.method == 'GET': 
+
+        return render_template( 'donation.html', form=form, msg=msg )
+
+    # check if both http method is POST and form is valid on submit
+    if form.validate_on_submit():
+
+        name             = request.form.get('name_dn', '', type=str)
+        amount           = request.form.get('amount','', type=int)
+        fundraiser_name  = request.form.get('fundraiser_name', '', type=str)     
+
+        donation = Donations(name, amount,fundraiser_name)
+
+        donation.save()
+
+        msg     = 'Donation Confirmed'     
+        success = True
+
+    else:
+        msg = 'Input error'     
+
+    return render_template( 'donation.html', form=form, msg=msg, success=success )

@@ -1,0 +1,27 @@
+<h1 class="pt-5 pb-2">List of Fundraisers</h1>
+
+      <p class="lead alert alert-warning">This is a list of all the active Fundraisers
+			  </p>
+
+	  <p class="ml-4"><a href="{{ url_for('index') }}">Return to the homePage.</a></p>
+
+		<table class="table">
+			<tr>
+				<th>Fundraiser Name</th>
+				<th>Amount to be raised</th>
+                <th>Summary</th>
+				<th>Created By</th>
+				
+			</tr>
+
+			<!-- here is a for-loop to give us all the socks -->
+			{% for fundraiser in Fundraisers %}
+			<tr>
+				<td>{{ fundraiser.name }}</td>
+				<td>{{ fundraiser.amount }}</td>
+				<td>${{ fundraiser.summary}}</td>
+				<td>{{ fundraiser.created_by }}</td>
+				
+			</tr>
+			{% endfor %}
+		</table>

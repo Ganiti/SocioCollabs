@@ -18,3 +18,8 @@ class FundraiserForm(FlaskForm):
 	amount    = StringField(u'Amount'  , validators=[DataRequired()])
 	summary    = StringField  (u'Summary'  , validators=[DataRequired()])
 	created_by    = StringField  (u'CreatedBy'  , validators=[DataRequired()])
+
+class DonationForm(FlaskForm):
+	name_dn            = StringField  (u'Name'  , validators=[DataRequired()])
+	fundraiser_name    = StringField  (u'Fundraiser_name'  , validators=[DataRequired()])
+	amount             = StringField  (u'Amount'  , validators=[DataRequired()])

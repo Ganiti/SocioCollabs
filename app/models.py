@@ -45,7 +45,7 @@ class Fundraisers(db.Model):
         self.created_by = created_by
 
     def __repr__(self):
-      return str(self.created_by)+ '-' + str(self.amount)
+      return str(self.created_by) #+ '-' + str(self.amount)
 
     def save(self):
 
@@ -69,8 +69,8 @@ class Donations(db.Model):
 
     def __init__(self, name_dn, fundraiser_name, amount,):
         self.name_dn          = name_dn
-        self.amount           = amount
         self.fundraiser_name  = fundraiser_name
+        self.amount           = amount
         
     def __repr__(self):
       return str(self.name_dn)+ '-' + str(self.amount)
@@ -79,8 +79,14 @@ class Donations(db.Model):
 
         # inject self into db session    
         db.session.add ( self )
-
+        
+        #db.session.query(Donations).filter(Donations.fundraiser_name==1000).delete()
+        #db.session.commit()
         # commit change and save the object
+        #Donations.query.delete()
+        #db.Donations.query().delete()
+        #db.session.query(Donations).delete()
+        
         db.session.commit( )
 
         return self 

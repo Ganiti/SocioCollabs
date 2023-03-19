@@ -133,7 +133,7 @@
  
                 <div class="box box1">
                     <div class="text">
-                        <h2 class="topic-heading">60.5k</h2>
+                        <h2 class="topic-heading">{{sum_result}}</h2>
                         <h2 class="topic">Amount Donated</h2>
                     </div>
  
@@ -144,7 +144,7 @@
  
                 <div class="box box2">
                     <div class="text">
-                        <h2 class="topic-heading">15</h2>
+                        <h2 class="topic-heading">{{no_fundr}}</h2>
                         <h2 class="topic">Fundraisers Posted</h2>
                     </div>
  
@@ -166,11 +166,32 @@
  
                 
  
-          <!---  <div class="report-container">
+           <div class="report-container">
                 <div class="report-header">
-                    <h1 class="recent-Articles">Recent Fundraisers</h1>
+                    <h1 class="recent-Articles">Recent Donations</h1>
                     <button class="view">View All</button>
-                </div>-->
+                    </div>
+                    <br>
+                    <table class="table">
+                        <tr>
+                            <th>Your Name -||- </th>
+                            <th>Fundraiser Name  -||-  </th>
+                            <th>Amount donated   </th>
+                        </tr>
+            
+                        <!-- here is a for-loop to give us all the socks -->
+                        {% for donation in Donations %}
+                        <tr>
+                            <td>{{ donation.name_dn }}   </td>
+                            <td>{{ donation.fundraiser_name }}   </td>
+                            <td>${{ donation.amount}}   </td>
+                            
+                            
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </br>
+                </div>
  
                
     <script>let menuicn = document.querySelector(".menuicn");

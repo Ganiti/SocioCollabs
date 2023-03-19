@@ -55,7 +55,7 @@ h1,h2,h3{
 h1{
     margin-top: 0;
     margin-bottom: 20px;
-    color: #fff;
+    color: #120b0b;
     font-size: 240%;
     word-spacing: 4px;
     letter-spacing: 1px;
@@ -140,8 +140,9 @@ a:active{
 .btn:visited,
 input[type=submit]{
     display: inline-block;
-    padding: 10px 30px;
-    font-weight: 300;
+    padding: 20px 40px;
+    font-size: 20px;
+    font-weight: 500;
     text-decoration: none;
     border-radius: 200px;
     transition: background-color 0.2s, border 0.2s, color 0.2s;
@@ -184,7 +185,8 @@ input[type=submit]:active{
 /* HEADER */
 /* ----------------------------------- */
 header{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url(app/static/assets/css/resources/css/img/hero.jpeg);
+    /*background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url(app/static/assets/css/resources/css/img/hero.jpeg);*/
+    background-color:#f7d9e0;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

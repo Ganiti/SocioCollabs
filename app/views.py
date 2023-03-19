@@ -3,6 +3,7 @@ import os, logging
 
 # Flask modules
 from flask               import render_template, request, url_for, redirect, send_from_directory,flash, make_response
+from sqlalchemy          import func
 
 from flask_login         import login_user, logout_user, current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
@@ -177,7 +178,11 @@ def dashboard():
         username=request.cookies.get('user_name')
         data=Users.query.filter_by(user=username).first()
         #print(type(data))
-        resp=make_response(render_template('dashboard.html',data=data)) 
+        no_fundr = Fundraisers.query.filter_by(created_by=username).count()
+        #list_donation=Donations.query.filter_by(name_dn=username).all()
+        sum_result = db.session.query(func.sum(Donations.amount)).filter_by(name_dn=username).scalar()
+        resp=make_response(render_template('dashboard.html',data=data,no_fundr=no_fundr,sum_result=sum_result, Donations=Donations.query.filter_by(name_dn=username).all())) 
+        
         return resp
 
 # Return sitemap
@@ -190,10 +195,13 @@ def fundraiserlist():
     #Fundraisers = Fundraisers.query.filter_by(style=style).order_by(Sock.name).all()
     return render_template('fundraiserlist.html', Fundraisers = Fundraisers.query.all())
 
+#@app.route('/no_of_fundraiser')
+#def no_of_fundraiser():
+
 #method for making new donation
 @app.route('/new_donation', methods = ['GET', 'POST'])
 def new_donation():
-      # declare the Registration Form
+      # declare the Donation Form
     form = DonationForm(request.form)
 
     msg     = None
@@ -207,10 +215,10 @@ def new_donation():
     if form.validate_on_submit():
 
         name             = request.form.get('name_dn', '', type=str)
-        amount           = request.form.get('amount','', type=int)
         fundraiser_name  = request.form.get('fundraiser_name', '', type=str)     
-
-        donation = Donations(name, amount,fundraiser_name)
+        amount           = request.form.get('amount','0', type=int)
+        
+        donation = Donations(name, fundraiser_name,amount,)
 
         donation.save()
 

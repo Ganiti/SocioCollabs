@@ -1,5 +1,5 @@
 from flask_wtf          import FlaskForm
-from flask_wtf.file     import FileField, FileRequired
+from flask_wtf.file     import FileField, FileRequired, FileAllowed
 from wtforms            import StringField, TextAreaField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email, DataRequired
 
@@ -18,3 +18,4 @@ class FundraiserForm(FlaskForm):
 	amount    = StringField(u'Amount'  , validators=[DataRequired()])
 	summary    = StringField  (u'Summary'  , validators=[DataRequired()])
 	created_by    = StringField  (u'CreatedBy'  , validators=[DataRequired()])
+	photo = FileField(u'photo', validators=[FileAllowed(['jpg', 'png','jpeg'])])

@@ -37,12 +37,15 @@ class Fundraisers(db.Model):
     amount    = db.Column(db.Integer)
     summary   = db.Column(db.String(64))
     created_by = db.Column(db.String(64))
+    image_file = db.Column(db.String(20), nullable = False , default = 'default.jpg')
+    # photo = db.Column(db.Text, nullable=False)
 
-    def __init__(self, name, amount, summary, created_by):
+    def __init__(self, name, amount, summary, created_by, image_file):
         self.name       = name
         self.amount  = amount
         self.summary      = summary
         self.created_by = created_by
+        self.image_file = image_file
 
     # def __repr__(self):
     #     return str(self.id) + ' - ' + str(self.user)

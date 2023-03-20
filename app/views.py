@@ -1,4 +1,6 @@
-import os, logging 
+import os, logging
+import secrets
+from tkinter import Image 
 
 
 # Flask modules
@@ -108,36 +110,69 @@ def login():
 
     return render_template( 'login.html', form=form, msg=msg )
 
+def save_picture_post(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/job', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
+def save_image(form_picture):
+    picture = form_picture.filename
+    picture_path=os.path.join(app.root_path,'static/assets/pics', picture)
+    form_picture.save(picture_path)
+    return picture
+
 #method for posting new fundraiser
 @app.route('/new_fundraiser', methods = ['GET', 'POST'])
 def new_fundraiser():
       # declare the Registration Form
     form = FundraiserForm(request.form)
-
+    
     msg     = None
     success = False
 
     if request.method == 'GET': 
 
         return render_template( 'post_fundraiser.html', form=form, msg=msg )
-
+    
+    
+   
     # check if both http method is POST and form is valid on submit
     if form.validate_on_submit():
-
+        
         name = request.form.get('name', '', type=str)
+        photo = request.files['photo'] 
+        print(photo.filename)
         amount= request.form.get('amount',0, type=int)
         summary = request.form.get('summary', '', type=str) 
-        created_by    = request.form.get('created_by'   , '', type=str)     
+        created_by = request.form.get('created_by'   , '', type=str) 
+       
+        #  
+      
+        # if form.photo.data:
+        # photo = save_picture_post(form.photo.data) 
+        
+        if photo:
+            image_file = save_image(photo)
+            fundraiser = Fundraisers(name, amount,summary,created_by,image_file)
+            fundraiser.save()
+            msg     = 'Fundraiser created'     
+            success = True
 
-        fundraiser = Fundraisers(name, amount,summary,created_by)
-
-        fundraiser.save()
-
-        msg     = 'Fundraiser created'     
-        success = True
-
+        else:
+            msg = 'Input error'
+            print(1)     
+    
     else:
-        msg = 'Input error'     
+         msg='Input error'
+         print(2)
 
     return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success )
 #    if request.method == 'POST':

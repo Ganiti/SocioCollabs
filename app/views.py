@@ -32,6 +32,9 @@ def logout():
 # Register a new user
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """
+    User is redirected to this method on clicking register me
+    """
     
     
     form = RegisterForm(request.form)
@@ -112,6 +115,9 @@ def login():
     return render_template( 'login.html', form=form, msg=msg )
 
 def save_picture_post(form_picture):
+    """
+    Takes a pictures, does xyz, then stores in a place abc. Returns whether picture store is successful
+    """
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture)
     picture_fn = random_hex + f_ext

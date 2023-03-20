@@ -5,6 +5,7 @@ from tkinter import Image
 
 # Flask modules
 from flask               import render_template, request, url_for, redirect, send_from_directory,flash, make_response
+from sqlalchemy          import func
 
 from flask_login         import login_user, logout_user, current_user, login_required
 from werkzeug.exceptions import HTTPException, NotFound, abort
@@ -12,8 +13,8 @@ from jinja2              import TemplateNotFound
 
 
 from app        import app, lm, db, bc
-from app.models import Users,Fundraisers
-from app.forms  import LoginForm, RegisterForm, FundraiserForm
+from app.models import Users,Fundraisers,Donations
+from app.forms  import LoginForm, RegisterForm, FundraiserForm, DonationForm
 
 
 @lm.user_loader
@@ -212,10 +213,54 @@ def dashboard():
         username=request.cookies.get('user_name')
         data=Users.query.filter_by(user=username).first()
         #print(type(data))
-        resp=make_response(render_template('dashboard.html',data=data)) 
+        no_fundr = Fundraisers.query.filter_by(created_by=username).count()
+        #list_donation=Donations.query.filter_by(name_dn=username).all()
+        sum_result = db.session.query(func.sum(Donations.amount)).filter_by(name_dn=username).scalar()
+        resp=make_response(render_template('dashboard.html',data=data,no_fundr=no_fundr,sum_result=sum_result, Donations=Donations.query.filter_by(name_dn=username).all())) 
+        
         return resp
 
 # Return sitemap
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'sitemap.xml')
+
+@app.route('/fundraiserlist')
+def fundraiserlist():
+    #Fundraisers = Fundraisers.query.filter_by(style=style).order_by(Sock.name).all()
+    return render_template('fundraiserlist.html', Fundraisers = Fundraisers.query.all())
+
+#@app.route('/no_of_fundraiser')
+#def no_of_fundraiser():
+
+#method for making new donation
+@app.route('/new_donation', methods = ['GET', 'POST'])
+def new_donation():
+      # declare the Donation Form
+    form = DonationForm(request.form)
+
+    msg     = None
+    success = False
+
+    if request.method == 'GET': 
+
+        return render_template( 'donation.html', form=form, msg=msg )
+
+    # check if both http method is POST and form is valid on submit
+    if form.validate_on_submit():
+
+        name             = request.form.get('name_dn', '', type=str)
+        fundraiser_name  = request.form.get('fundraiser_name', '', type=str)     
+        amount           = request.form.get('amount','0', type=int)
+        
+        donation = Donations(name, fundraiser_name,amount,)
+
+        donation.save()
+
+        msg     = 'Donation Confirmed'     
+        success = True
+
+    else:
+        msg = 'Input error'     
+
+    return render_template( 'donation.html', form=form, msg=msg, success=success )

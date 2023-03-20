@@ -149,9 +149,9 @@ label {
   }
   
   .nav {
-    height: 50px;
+    height: 80px;
     width: 100%;
-    background-color: #4d4d4d;
+    background-color: #333;
     position: relative;
     margin-bottom: auto;
     
@@ -163,7 +163,7 @@ label {
   
   .nav > .nav-header > .nav-title {
     display: inline-block;
-    font-size: 22px;
+    font-size: 50px;
     color: #fff;
     padding: 10px 10px 10px 10px;
   }
@@ -175,7 +175,7 @@ label {
   .nav > .nav-links {
     display: inline;
     float: right;
-    font-size: 18px;
+    font-size: 25px;
   }
   
   .nav > .nav-links > a {

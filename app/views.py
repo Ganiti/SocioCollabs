@@ -1,4 +1,4 @@
-import os, logging
+import os, logging 
 
 from flask import (
     render_template,
@@ -100,35 +100,50 @@ def login():
     return render_template("login.html", form=form, msg=msg)
 
 
-# method for posting new fundraiser
-@app.route("/new_fundraiser", methods=["GET", "POST"])
+#method for posting new fundraiser
+@app.route('/new_fundraiser', methods = ['GET', 'POST'])
 def new_fundraiser():
     form = FundraiserForm(request.form)
 
-    msg = None
+    msg     = None
     success = False
 
-    if request.method == "GET":
-        return render_template("post_fundraiser.html", form=form, msg=msg)
+    if request.method == 'GET': 
 
+        return render_template( 'post_fundraiser.html', form=form, msg=msg )
+
+    # check if both http method is POST and form is valid on submit
     if form.validate_on_submit():
-        name = request.form.get("name", "", type=str)
-        amount = request.form.get("amount", 0, type=int)
-        summary = request.form.get("summary", "", type=str)
-        created_by = request.form.get("created_by", "", type=str)
 
-        fundraiser = Fundraisers(name, amount, summary, created_by)
+        name = request.form.get('name', '', type=str)
+        amount= request.form.get('amount',0, type=int)
+        summary = request.form.get('summary', '', type=str) 
+        created_by    = request.form.get('created_by'   , '', type=str)     
+
+        fundraiser = Fundraisers(name, amount,summary,created_by)
 
         fundraiser.save()
 
-        msg = "Fundraiser created"
+        msg     = 'Fundraiser created'     
         success = True
 
-        return render_template(
-            "post_fundraiser.html", form=form, msg=msg, success=success
-        )
     else:
-        msg = "Input error"
+        msg = 'Input error'     
+
+    return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success )
+#    if request.method == 'POST':
+#     #   if not request.form['name'] or not request.form['city'] or not request.form['addr']:
+#     #      flash('Please enter all the fields', 'error')
+#     #   else:
+
+#          fundraiser = Fundraisers(request.form['name'], request.form['amount'],
+#             request.form['summary'], request.form['created_by'])
+         
+#          fundraiser.save()
+#          flash('Record was successfully added')
+#          return redirect(url_for('show_all'))
+#    return render_template('new.html') 
+
 
 # App main route + generic routing
 @app.route("/", defaults={"path": "index"})

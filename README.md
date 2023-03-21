@@ -23,11 +23,11 @@ $ pip3 install -r requirements.txt.
 ## Step # 4 - Set Up Environment. 
 
  ***Set the FLASK_APP environment variable.*** 
-$ (Unix/Mac) export FLASK_APP=run.py. 
-  (Windows) set FLASK_APP=run.py. 
-  (Powershell) $env:FLASK_APP = ".\run.py". 
+$ (Unix/Mac) export FLASK_APP=run.py.  
+  (Windows) set FLASK_APP=run.py.   
+  (Powershell) $env:FLASK_APP = ".\run.py".   
 
-## Step # 5 - Create Tables (SQLite persistance)  
+## Step # 5 - Create Tables (SQLite persistance).  
 
  ***Create tables.*** 
 $ flask shell. 

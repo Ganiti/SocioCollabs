@@ -3,17 +3,17 @@
 
 ## Step # 1 -clone this repo
 $ git clone https://github.com/Ganiti/SocioCollabs.git.   
-$ cd SocioCollabs
+  cd SocioCollabs
 
 ## Step # 2 - Create a virtual environment
 
  ***Virtualenv modules installation (Unix based systems)***  
 $ virtualenv env.   
-$ source env/bin/activate. 
-$
+  source env/bin/activate. 
+
  ***Virtualenv modules installation (Windows based systems).***   
 $  virtualenv env. 
-$  .\env\Scripts\activate. 
+ .\env\Scripts\activate. 
 
 ## Step # 3 - Install dependencies. 
 
@@ -24,8 +24,8 @@ $ pip3 install -r requirements.txt.
 
  ***Set the FLASK_APP environment variable.*** 
 $ (Unix/Mac) export FLASK_APP=run.py. 
-$ (Windows) set FLASK_APP=run.py. 
-$ (Powershell) $env:FLASK_APP = ".\run.py". 
+  (Windows) set FLASK_APP=run.py. 
+  (Powershell) $env:FLASK_APP = ".\run.py". 
 
 ## Step # 5 - Create Tables (SQLite persistance)  
 

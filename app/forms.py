@@ -26,18 +26,12 @@ class FundraiserForm(FlaskForm):
     amount = StringField("Amount", validators=[DataRequired()])
     summary = StringField("Summary", validators=[DataRequired()])
     created_by = StringField("CreatedBy", validators=[DataRequired()])
-
+    #photo = FileField(u'photo', validators=[FileAllowed(['jpg', 'png','jpeg'])])
 
 class DonationForm(FlaskForm):
     name_dn = StringField("Name", validators=[DataRequired()])
     fundraiser_name = StringField("Fundraiser_name", validators=[DataRequired()])
     amount = StringField("Amount", validators=[DataRequired()])
-=======
-	name    = StringField  (u'Name'  , validators=[DataRequired()])
-	amount    = StringField(u'Amount'  , validators=[DataRequired()])
-	summary    = StringField  (u'Summary'  , validators=[DataRequired()])
-	created_by    = StringField  (u'CreatedBy'  , validators=[DataRequired()])
-	photo = FileField(u'photo', validators=[FileAllowed(['jpg', 'png','jpeg'])])
 
 class DonationForm(FlaskForm):
 	name_dn            = StringField  (u'Name'  , validators=[DataRequired()])

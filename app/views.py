@@ -1,5 +1,7 @@
 import os, logging 
-
+from flask import Flask, render_template, request, jsonify,redirect, url_for, make_response
+from flask_sqlalchemy import SQLAlchemy
+import razorpay
 from flask import (
     render_template,
     request,
@@ -16,7 +18,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users, Fundraisers, Donations
+from app.models import Users, Fundraisers,Donations, New_donations
 from app.forms import LoginForm, RegisterForm, FundraiserForm, DonationForm
 
 
@@ -227,3 +229,35 @@ def new_donation():
         msg = "Input error"
 
     return render_template("donation.html", form=form, msg=msg, success=success)
+
+@app.route('/new_donation2', methods=['GET', 'POST'])
+def hello():
+   # form = DonationForm(request.form)
+    if request.method=="POST":
+
+        name = request.form.get("name_dn", "", type=str)
+        email = request.form.get("email", "", type=str)
+        fundraiser_name = request.form.get("fundraiser_name", "", type=str)
+        print("Hello")
+        amount = request.form.get("amount", "0", type=int)
+
+        donation = New_donations(email = email, name= name, amount = amount)
+
+        db.session.add(donation)
+        db.session.commit()
+        msg = "Donation Confirmed"
+        success = True
+        return redirect (url_for('pay', id = donation.id))
+    return render_template('index2.html')
+   
+@app.route('/pay/<id>', methods=['GET', 'POST'])
+def pay(id):
+    user = New_donations.query.filter_by(id=id).first()
+    client = razorpay. Client (auth = ("rzp_test_aa8LC7jVhoEkBI", "9QeRcMiD5dLcYQOEdHlHj6Tf"))
+    payment = client.order.create({'amount': (int(user.amount)*100), 'currency': 'INR', 'payment_capture':'1'})
+    return render_template('pay.html', payment = payment, x=user.email,y=user.name)
+   
+
+@app.route('/success', methods=['GET', 'POST'])
+def success():
+ return render_template('success.html')

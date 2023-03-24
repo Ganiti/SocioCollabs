@@ -41,7 +41,7 @@
 			<div class="headline-text-box">
 				<h1 style="font-size:55px;"><b>SocioCollabs</b><br><h1 style="font-size: 40px;">Alone we can do so little!<br>Together we can do so much!</h1>
 				<a class="btn btn-full" href="#">Donate Now</a>
-				<a class="btn btn-full" href="#contact-form"">Contact Us</a>
+				<a class="btn btn-full" href="#contact-form">Contact Us</a>
 			</div>
 		</div>
     </header>
@@ -58,7 +58,13 @@
                         <p class="plan-price"><b>Donate to Fundraisers</b></p>
                     </div>
                     <div>
-                        <a href="/new_donation2" class="btn btn-ghost">Now</a>
+                        {% if logged_in %}
+                                
+                                <a href="/new_donation2" class="btn btn-ghost">Now</a>
+                            {% else %}
+                                <a href="/login" class="btn btn-ghost">Now</a>
+                            {% endif %}    
+                            
                     </div>
                 </div>
             </div>

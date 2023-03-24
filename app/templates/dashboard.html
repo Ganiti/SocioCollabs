@@ -183,9 +183,9 @@
                         <!-- here is a for-loop to give us all the socks -->
                         {% for donation in Donations %}
                         <tr>
-                            <td>{{ donation.name_dn }}   </td>
+                            <td>{{ donation.name }}   </td>
                             <td>{{ donation.fundraiser_name }}   </td>
-                            <td>${{ donation.amount}}   </td>
+                            <td>{{ donation.amount}}   </td>
                             
                             
                         </tr>

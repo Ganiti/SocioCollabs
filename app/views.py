@@ -1,6 +1,9 @@
 import os, logging 
 from flask import Flask, render_template, request, jsonify,redirect, url_for, make_response
 from flask_sqlalchemy import SQLAlchemy
+import sys
+import subprocess
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'razorpay'])
 import razorpay
 from flask import (
     render_template,
@@ -33,7 +36,9 @@ def load_user(user_id):
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("index"))
+    resp = make_response(redirect(url_for("index")))
+    resp.set_cookie("user_name", "")
+    return resp
 
 
 # Register a new user
@@ -144,11 +149,12 @@ def new_fundraiser():
 def index(path):
     # if not current_user.is_authenticated:
     #    return redirect(url_for('login'))
-
+    
     try:
+        name = request.cookies.get('user_name')
+        print(name!="")
+        return render_template("index.html",logged_in=name!="")
         
-        return render_template("index.html")
-
     except TemplateNotFound:
         return render_template("page-404.html"), 404
 
@@ -165,17 +171,20 @@ def dashboard():
     no_fundr = Fundraisers.query.filter_by(created_by=username).count()
 
     sum_result = (
-        db.session.query(func.sum(Donations.amount))
-        .filter_by(name_dn=username)
+        db.session.query(func.sum(New_donations.amount))
+        .filter_by(name=username)
         .scalar()
     )
+    print(sum_result)
+    temp1=New_donations.query.filter_by(name=username).all()
+    print(temp1)
     resp = make_response(
         render_template(
             "dashboard.html",
             data=data,
             no_fundr=no_fundr,
             sum_result=sum_result,
-            Donations=Donations.query.filter_by(name_dn=username).all(),
+            Donations=temp1,
         )
     )
     return resp
@@ -228,13 +237,13 @@ def hello():
     #form = DonationForm(request.form)
     if request.method=="POST":
 
-        name = request.form.get("name_dn", "", type=str)
+        name = request.form.get("name", "", type=str)
         email = request.form.get("email", "", type=str)
         fundraiser_name = request.form.get("fundraiser_name", "", type=str)
         print("Hello")
         amount = request.form.get("amount", "0", type=int)
 
-        donation = New_donations(email = email, name= name, amount = amount)
+        donation = New_donations(email = email, name= name, fundraiser_name=fundraiser_name,amount = amount)
 
         db.session.add(donation)
         db.session.commit()

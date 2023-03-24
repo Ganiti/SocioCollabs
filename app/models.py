@@ -82,9 +82,33 @@ class Donations(db.Model):
         db.session.commit()
 
         return self
+    
 class New_donations(db.Model):
-    id = db.Column(db. Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), nullable=False)
     name = db.Column (db.String(120), nullable=False)
-    amount = db.Column (db.String (120), nullable=False)
+    fundraiser_name=db.Column(db.String(120), nullable=True)
+    amount = db.Column (db.Integer, nullable=False)
 
+
+    def __init__(
+        self,
+        email,
+        name,
+        fundraiser_name,
+        amount,
+    ):
+        self.email = email
+        self.name=name
+        self.fundraiser_name=fundraiser_name
+        self.amount = amount
+
+    def __repr__(self):
+        return str(self.name + "-" + str(self.amount))
+
+    def save(self):
+        db.session.add(self)
+
+        db.session.commit()
+
+        return self

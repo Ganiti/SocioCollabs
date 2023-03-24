@@ -10,6 +10,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 
 app.config.from_object("app.config.Config")
+app.config['UPLOAD_FOLDER'] = 'app/static/assets/uploads'
 
 db = SQLAlchemy(app)  
 bc = Bcrypt(app)  

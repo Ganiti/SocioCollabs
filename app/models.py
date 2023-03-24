@@ -82,3 +82,4 @@ class Donations(db.Model):
         db.session.commit()
 
         return self
+

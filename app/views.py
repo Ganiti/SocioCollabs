@@ -131,18 +131,8 @@ def new_fundraiser():
         msg = 'Input error'     
 
     return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success )
-#    if request.method == 'POST':
-#     #   if not request.form['name'] or not request.form['city'] or not request.form['addr']:
-#     #      flash('Please enter all the fields', 'error')
-#     #   else:
 
-#          fundraiser = Fundraisers(request.form['name'], request.form['amount'],
-#             request.form['summary'], request.form['created_by'])
-         
-#          fundraiser.save()
-#          flash('Record was successfully added')
-#          return redirect(url_for('show_all'))
-#    return render_template('new.html') 
+
 
 
 # App main route + generic routing

@@ -131,8 +131,9 @@ def new_fundraiser():
 
     else:
         msg = 'Input error'     
-
-    return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success )
+    username = request.cookies.get("user_name")
+    data = Users.query.filter_by(user=username).first()
+    return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success, data=data)
 
 
 
@@ -145,6 +146,7 @@ def index(path):
     #    return redirect(url_for('login'))
 
     try:
+        
         return render_template("index.html")
 
     except TemplateNotFound:
@@ -152,6 +154,7 @@ def index(path):
 
     except:
         return render_template("page-500.html"), 500
+
 
 
 @app.route("/dashboard")
@@ -222,7 +225,7 @@ def new_donation():
 
 @app.route('/new_donation2', methods=['GET', 'POST'])
 def hello():
-   # form = DonationForm(request.form)
+    #form = DonationForm(request.form)
     if request.method=="POST":
 
         name = request.form.get("name_dn", "", type=str)
@@ -239,7 +242,8 @@ def hello():
         success = True
         return redirect (url_for('pay', id = donation.id))
     return render_template('index2.html')
-   
+
+
 @app.route('/pay/<id>', methods=['GET', 'POST'])
 def pay(id):
     user = New_donations.query.filter_by(id=id).first()

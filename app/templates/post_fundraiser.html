@@ -42,20 +42,24 @@
                         <br />
 
                         <div class="form-floating mb-3">
+                            
+                            <label for="floatingInput">Name of the Fundraiser</label>
                             {{ form.name(class="form-control") }}
-                            <label for="floatingInput">Name</label>
                         </div>
                         <div class="form-floating mb-3">
-                            {{ form.amount(class="form-control") }}
+                            
                             <label for="floatingInput">Amount to be collected</label>
+                            {{ form.amount(class="form-control") }}
                         </div>
                         <div class="form-floating mb-3">
+                            
+                            <label for="floatingInput">Brief description of fundraiser</label>
                             {{ form.summary(class="form-control") }}
-                            <label for="floatingInput">Give a brief description about your fundraiser</label>
                         </div>
                         <div class="form-floating mb-3">
+                            
+                            <label for="floatingInput">Name of the creator</label>
                             {{ form.created_by(class="form-control") }}
-                            <label for="floatingInput">Your name</label>
                         </div>
                        <!--- <input type="file" name="file"><br>
                         <input type="submit" value="Upload">

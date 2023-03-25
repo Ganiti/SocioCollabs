@@ -138,9 +138,7 @@ def new_fundraiser():
         msg = 'Input error'     
     username = request.cookies.get("user_name")
     data = Users.query.filter_by(user=username).first()
-    return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success, data=data)
-
-
+    return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success, data=data,logged_in=True)
 
 
 # App main route + generic routing
@@ -152,7 +150,9 @@ def index(path):
     
     try:
         name = request.cookies.get('user_name')
-        print(name!="")
+        print(name)
+        if (name==None):
+            return render_template("index.html",logged_in=False)
         return render_template("index.html",logged_in=name!="")
         
     except TemplateNotFound:
@@ -197,7 +197,10 @@ def sitemap():
 # method for creating fundraiser list
 @app.route("/fundraiserlist")
 def fundraiserlist():
-    return render_template("fundraiserlist.html", Fundraisers=Fundraisers.query.all())
+     name = request.cookies.get('user_name')
+     if (name==None):
+        return render_template("fundraiserlist.html", Fundraisers=Fundraisers.query.all(),logged_in=False)     
+     return render_template("fundraiserlist.html", Fundraisers=Fundraisers.query.all(),logged_in=name!="")
 
 
 # method for making new donation

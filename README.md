@@ -28,12 +28,11 @@ $ (Unix/Mac) export FLASK_APP=run.py.
   (Windows) set FLASK_APP=run.py.   
   (Powershell) $env:FLASK_APP = ".\run.py".   
 
-### Step # 5 - Create Tables (SQLite persistance).  
+### Step # 5 - Create Tables in DB.  
 
- ***Create tables.*** 
-$ flask shell.  
-$ >>> from app import db.  
-$ >>> db.create_all().  
+ ***To create Tables run the following commands on the shell.***  
+ >>> from app import db.  
+ >>> db.create_all().  
 
 ### Step #6 - (optional) Enable DEBUG Environment (local development). 
 

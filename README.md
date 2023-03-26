@@ -1,5 +1,14 @@
 # SocioCollabs
 
+## About the project:
+SocioCollabs is a crowdfunding web application which allows users to raise funds for projects in various disciplines either by creating a new fundraiser or donating to the existing fundraiser.
+It has the following features :
+-> Register & Aunthenticate User
+-> Browse Fundraisers
+-> Create Fundraisers
+-> Make Donations through Payment Gateway
+-> Track user activity on Dashboard
+
 ## How to run this project:
 
 ### Step # 1 -clone this repo
@@ -31,8 +40,8 @@ $ (Unix/Mac) export FLASK_APP=run.py.
 ### Step # 5 - Create Tables in DB.  
 
  ***To create Tables run the following commands on the shell.***  
- >>> from app import db.  
- >>> db.create_all().  
+ $ >>> from app import db.  
+ $ >>> db.create_all().  
 
 ### Step #6 - (optional) Enable DEBUG Environment (local development). 
 

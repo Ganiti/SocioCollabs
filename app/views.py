@@ -21,7 +21,7 @@ from werkzeug.exceptions import HTTPException, NotFound, abort
 from jinja2 import TemplateNotFound
 
 from app import app, lm, db, bc
-from app.models import Users, Fundraisers,Donations, New_donations
+from app.models import Users, Fundraisers,New_donations
 from app.forms import LoginForm, RegisterForm, FundraiserForm, DonationForm
 
 
@@ -89,7 +89,7 @@ def login():
         username = request.form.get("username", "", type=str)
         password = request.form.get("password", "", type=str)
 
-        # filter User out of database through username
+        
         user = Users.query.filter_by(user=username).first()
 
         if user:
@@ -107,7 +107,7 @@ def login():
     return render_template("login.html", form=form, msg=msg)
 
 
-#method for posting new fundraiser
+#Create a new fundraiser
 @app.route('/new_fundraiser', methods = ['GET', 'POST'])
 def new_fundraiser():
     form = FundraiserForm(request.form)
@@ -119,7 +119,7 @@ def new_fundraiser():
 
         return render_template( 'post_fundraiser.html', form=form, msg=msg )
 
-    # check if both http method is POST and form is valid on submit
+    
     if form.validate_on_submit():
 
         name = request.form.get('name', '', type=str)
@@ -141,12 +141,10 @@ def new_fundraiser():
     return render_template( 'post_fundraiser.html', form=form, msg=msg, success=success, data=data,logged_in=True)
 
 
-# App main route + generic routing
+# App main route + generic routing (Home Page)
 @app.route("/", defaults={"path": "index"})
 @app.route("/<path>")
 def index(path):
-    # if not current_user.is_authenticated:
-    #    return redirect(url_for('login'))
     
     try:
         name = request.cookies.get('user_name')
@@ -203,41 +201,9 @@ def fundraiserlist():
      return render_template("fundraiserlist.html", Fundraisers=Fundraisers.query.all(),logged_in=name!="")
 
 
-# method for making new donation
-@app.route("/new_donation", methods=["GET", "POST"])
-def new_donation():
-    form = DonationForm(request.form)
-
-    msg = None
-    success = False
-
-    if request.method == "GET":
-        return render_template("donation.html", form=form, msg=msg)
-
-    if form.validate_on_submit():
-        name = request.form.get("name_dn", "", type=str)
-        fundraiser_name = request.form.get("fundraiser_name", "", type=str)
-        amount = request.form.get("amount", "0", type=int)
-
-        donation = Donations(
-            name,
-            fundraiser_name,
-            amount,
-        )
-
-        donation.save()
-
-        msg = "Donation Confirmed"
-        success = True
-
-    else:
-        msg = "Input error"
-
-    return render_template("donation.html", form=form, msg=msg, success=success)
-
 @app.route('/new_donation2', methods=['GET', 'POST'])
 def hello():
-    #form = DonationForm(request.form)
+    
     if request.method=="POST":
 
         name = request.form.get("name", "", type=str)

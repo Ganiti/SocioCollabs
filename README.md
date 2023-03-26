@@ -3,7 +3,7 @@
 ## About the project:
 SocioCollabs is a crowdfunding web application which allows users to raise funds for projects in various disciplines either by creating a new fundraiser or donating to the existing fundraiser.
 ***It has the following features.****  
--> Register & Aunthenticate User. 
+-> Register & Aunthenticate User.   
 -> Browse Fundraisers.    
 -> Create Fundraisers.  
 -> Make Donations through Payment Gateway.   

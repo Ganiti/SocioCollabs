@@ -25,7 +25,7 @@ class FundraiserForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     amount = StringField("Amount", validators=[DataRequired()])
     summary = StringField("Summary", validators=[DataRequired()])
-    created_by = StringField("CreatedBy", validators=[DataRequired()])
+    #created_by = StringField("CreatedBy", validators=[DataRequired()])
     
 class DonationForm(FlaskForm):
     name_dn = StringField("Name", validators=[DataRequired()])

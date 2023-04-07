@@ -107,6 +107,11 @@
 					<br>
 				    <strong>Created By:</strong> {{fundraiser.created_by }}</div>
 					<a href="/new_donation2" class="button">Contribute Now</a>
+					{% for result in results %}
+					   {% if result[0]==fundraiser.name %}   
+					    <h4>Amount Raised till now: {{result[1]}}</h4>
+						{% endif %}
+				{% endfor %}
 			  </div>
 			</div>
 			{% endfor %}
